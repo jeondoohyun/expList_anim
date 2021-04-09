@@ -1,0 +1,14 @@
+전화 퍼미션 거부 하고 ble 잠금해제 연결 시도 하면 단말기를 찾을 수 없다고 나온다.
+
+
+
+--전체메뉴 변경사항
+1. LinearLayout height = "wrap", padding = "5dp"
+2. Button > TextView , background , clickable
+
+========== 상품구매UI계획
+- 2페이지
+네이게이션바 색상 변경 (옅은회색 바탕 + 옅은흰색 버튼)
+
+
+
