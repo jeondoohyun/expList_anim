@@ -9,6 +9,7 @@ import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.util.SparseArray;
 import android.view.View;
 import android.view.ViewGroup;
@@ -143,8 +144,10 @@ public class AnimatedExpandableListView extends ExpandableListView {
         }
 
         int groupFlatPos = getFlatListPosition(getPackedPositionForGroup(groupPos));
+        Log.e("groupFlatPos",groupFlatPos+"");  /*todo delete*/
         if (groupFlatPos != -1) {
             int childIndex = groupFlatPos - getFirstVisiblePosition();
+            Log.e("childIndex",childIndex+"");  /*todo delete*/
             if (childIndex < getChildCount()) {
                 // Get the view for the group is it is on screen...
                 View v = getChildAt(childIndex);

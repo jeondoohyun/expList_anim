@@ -5,8 +5,8 @@ import java.util.List;
 
 
 import android.os.Bundle;
-import android.app.Activity;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +16,8 @@ import android.widget.ExpandableListView.OnGroupClickListener;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 /**
  * This is an example usage of the AnimatedExpandableListView class.
@@ -27,11 +29,15 @@ import androidx.appcompat.app.AppCompatActivity;
 public class MainActivity extends AppCompatActivity {
     private AnimatedExpandableListView listView;
     private ExampleAdapter adapter;
+    RecyclerAdapter recyclerAdapter;
+    ArrayList<Item> childItem = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
 
         List<GroupItem> items = new ArrayList<GroupItem>();
 
@@ -46,14 +52,18 @@ public class MainActivity extends AppCompatActivity {
                 child.title = "Awesome item " + j;
                 child.hint = "Too awesome";
 
+//                childItem.add(new Item(child.title,child.hint));
+
                 item.items.add(child);
             }
 
             items.add(item);
         }
 
+//        recyclerAdapter = new RecyclerAdapter(this, childItem);
+
         adapter = new ExampleAdapter(this);
-        adapter.setData(items);
+        adapter.setData(items); /*items는 List<GroupItem>의 크기가 100인 콜렉션*/
 
         listView = (AnimatedExpandableListView) findViewById(R.id.listView);
         listView.setAdapter((ExpandableListAdapter) adapter);
@@ -63,6 +73,7 @@ public class MainActivity extends AppCompatActivity {
         listView.setOnGroupClickListener(new OnGroupClickListener() {
             @Override
             public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
+                Log.e("groupPosition",groupPosition+"");    /*todo delete*/
                 // We call collapseGroupWithAnimation(int) and
                 // expandGroupWithAnimation(int) to animate group
                 // expansion/collapse.
@@ -79,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
 
     private static class GroupItem {
         String title;
-        List<ChildItem> items = new ArrayList<ChildItem>();
+        List<ChildItem> items;
     }
 
     private static class ChildItem {
@@ -88,8 +99,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private static class ChildHolder {
-        TextView title;
-        TextView hint;
+//        TextView title;
+//        TextView hint;
+        TextView beforePrice;
+        TextView afterPrice;
     }
 
     private static class GroupHolder {
@@ -103,6 +116,8 @@ public class MainActivity extends AppCompatActivity {
         private LayoutInflater inflater;
 
         private List<GroupItem> items;
+
+        RecyclerView recyclerView;
 
         public ExampleAdapter(Context context) {
             inflater = LayoutInflater.from(context);
@@ -128,16 +143,25 @@ public class MainActivity extends AppCompatActivity {
             ChildItem item = getChild(groupPosition, childPosition);
             if (convertView == null) {
                 holder = new ChildHolder();
-                convertView = inflater.inflate(R.layout.list_item, parent, false);
-                holder.title = (TextView) convertView.findViewById(R.id.textTitle);
-                holder.hint = (TextView) convertView.findViewById(R.id.textHint);
+//                convertView = inflater.inflate(R.layout.list_item, parent, false);
+                convertView = inflater.inflate(R.layout.activity_child,parent,false);
+                recyclerView = convertView.findViewById(R.id.recyclerView);
+                recyclerView.setAdapter(recyclerAdapter);
+
+                LinearLayoutManager mManager = new LinearLayoutManager(MainActivity.this, LinearLayoutManager.HORIZONTAL, false);
+                recyclerView.setLayoutManager(mManager);
+
+                holder.beforePrice = convertView.findViewById(R.id.child_item_beforePrice);
+                holder.afterPrice = convertView.findViewById(R.id.child_item_afterPrice);
+//                holder.title = (TextView) convertView.findViewById(R.id.textTitle);
+//                holder.hint = (TextView) convertView.findViewById(R.id.textHint);
                 convertView.setTag(holder);
             } else {
                 holder = (ChildHolder) convertView.getTag();
             }
 
-            holder.title.setText(item.title);
-            holder.hint.setText(item.hint);
+//            holder.title.setText(item.title);
+//            holder.hint.setText(item.hint);
 
             return convertView;
         }
