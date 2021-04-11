@@ -40,10 +40,11 @@ public class MainActivity extends AppCompatActivity {
 
 
         List<GroupItem> items = new ArrayList<GroupItem>();
+        GroupItem item = new GroupItem();
 
         // Populate our list with groups and it's children
         for(int i = 1; i < 100; i++) {
-            GroupItem item = new GroupItem();
+//            GroupItem item = new GroupItem();
 
             item.title = "Group " + i;
 
@@ -90,7 +91,7 @@ public class MainActivity extends AppCompatActivity {
 
     private static class GroupItem {
         String title;
-        List<ChildItem> items;
+        List<ChildItem> items = new ArrayList<>();
     }
 
     private static class ChildItem {
