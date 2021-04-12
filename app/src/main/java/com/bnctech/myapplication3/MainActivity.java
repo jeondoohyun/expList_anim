@@ -31,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
     private ExampleAdapter adapter;
     RecyclerAdapter recyclerAdapter;
     ArrayList<Item> childItem = new ArrayList<>();
+    List<GroupItem> items = new ArrayList<GroupItem>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,27 +40,56 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-        List<GroupItem> items = new ArrayList<GroupItem>();
-        GroupItem item = new GroupItem();
+
 
         // Populate our list with groups and it's children
-        for(int i = 1; i < 100; i++) {
+//        for(int i = 1; i < 100; i++) {
 //            GroupItem item = new GroupItem();
-
-            item.title = "Group " + i;
-
-            for(int j = 0; j < i; j++) {
-                ChildItem child = new ChildItem();
-                child.title = "Awesome item " + j;
-                child.hint = "Too awesome";
-
+//
+//
+//            item.title = "Group " + i;
+//
+//            for(int j = 0; j < i; j++) {
+//                ChildItem child = new ChildItem();
+//                child.title = "Awesome item " + j;
+//                child.hint = "Too awesome";
+//
 //                childItem.add(new Item(child.title,child.hint));
+//
+////                item.items.add(childItem);
+//            }
+//            item.items.add("");
+//            items.add(item);
+//        }
 
-                item.items.add(child);
-            }
+        GroupItem item = new GroupItem();
+        item.title = "월간유니콘/구독형";
+        item.child.add(new child());
+        item.child.get(0).items.add(new Item("1","2"));
+        item.child.get(0).items.add(new Item("3","4"));
+        item.child.get(0).items.add(new Item("5","6"));
+        items.add(item);
 
-            items.add(item);
-        }
+        item = new GroupItem();
+        item.title = "유니콘pass/정액형/시간";
+        item.child.add(new child());
+        item.child.get(0).items.add(new Item("7","8"));
+        item.child.get(0).items.add(new Item("9","10"));
+        item.child.get(0).items.add(new Item("11","12"));
+        items.add(item);
+
+        item = new GroupItem();
+        item.title = "유니콘pass/횟수";
+        item.child.add(new child());
+        item.child.get(0).items.add(new Item("13","14"));
+        item.child.get(0).items.add(new Item("15","16"));
+        item.child.get(0).items.add(new Item("17","18"));
+        items.add(item);
+
+        Log.e("items사이즈",items.size()+"");
+
+
+
 
 //        recyclerAdapter = new RecyclerAdapter(this, childItem);
 
@@ -91,13 +121,20 @@ public class MainActivity extends AppCompatActivity {
 
     private static class GroupItem {
         String title;
-        List<ChildItem> items = new ArrayList<>();
+//        List<ChildItem> items = new ArrayList<>();
+//        List<Item> items = new ArrayList<>();
+        List<child> child = new ArrayList<>();
+    }
+
+    private static class child {
+        ArrayList<Item> items = new ArrayList<Item>();
     }
 
     private static class ChildItem {
         String title;
         String hint;
     }
+
 
     private static class ChildHolder {
 //        TextView title;
@@ -128,9 +165,14 @@ public class MainActivity extends AppCompatActivity {
             this.items = items;
         }
 
+//        @Override
+//        public ChildItem getChild(int groupPosition, int childPosition) {
+//            return items.get(groupPosition).items.get(childPosition);
+//        }
+
         @Override
-        public ChildItem getChild(int groupPosition, int childPosition) {
-            return items.get(groupPosition).items.get(childPosition);
+        public child getChild(int groupPosition, int childPosition) {
+            return items.get(groupPosition).child.get(childPosition);
         }
 
         @Override
@@ -141,7 +183,8 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public View getRealChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
             ChildHolder holder;
-            ChildItem item = getChild(groupPosition, childPosition);
+//            ChildItem item = getChild(groupPosition, childPosition);
+            child item = getChild(groupPosition, childPosition);
             if (convertView == null) {
                 holder = new ChildHolder();
 //                convertView = inflater.inflate(R.layout.list_item, parent, false);
@@ -169,7 +212,8 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public int getRealChildrenCount(int groupPosition) {
-            return items.get(groupPosition).items.size();
+//            return items.get(groupPosition).items.size();
+            return items.get(groupPosition).child.size();
         }
 
         @Override
@@ -199,6 +243,7 @@ public class MainActivity extends AppCompatActivity {
             } else {
                 holder = (GroupHolder) convertView.getTag();
             }
+            recyclerAdapter = new RecyclerAdapter(MainActivity.this,items.get(groupPosition).child.get(0).items);
 
             holder.title.setText(item.title);
 
