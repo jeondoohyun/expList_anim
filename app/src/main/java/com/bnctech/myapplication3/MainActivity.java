@@ -189,14 +189,10 @@ public class MainActivity extends AppCompatActivity {
                 holder = new ChildHolder();
 //                convertView = inflater.inflate(R.layout.list_item, parent, false);
                 convertView = inflater.inflate(R.layout.activity_child,parent,false);
-                recyclerView = convertView.findViewById(R.id.recyclerView);
-                recyclerView.setAdapter(recyclerAdapter);
 
-                LinearLayoutManager mManager = new LinearLayoutManager(MainActivity.this, LinearLayoutManager.HORIZONTAL, false);
-                recyclerView.setLayoutManager(mManager);
 
-                holder.beforePrice = convertView.findViewById(R.id.child_item_beforePrice);
-                holder.afterPrice = convertView.findViewById(R.id.child_item_afterPrice);
+
+
 //                holder.title = (TextView) convertView.findViewById(R.id.textTitle);
 //                holder.hint = (TextView) convertView.findViewById(R.id.textHint);
                 convertView.setTag(holder);
@@ -204,6 +200,16 @@ public class MainActivity extends AppCompatActivity {
                 holder = (ChildHolder) convertView.getTag();
             }
 
+            recyclerAdapter = new RecyclerAdapter(MainActivity.this,items.get(groupPosition).child.get(0).items);
+
+            recyclerView = convertView.findViewById(R.id.recyclerView);
+            recyclerView.setAdapter(recyclerAdapter);
+
+            LinearLayoutManager mManager = new LinearLayoutManager(MainActivity.this, LinearLayoutManager.HORIZONTAL, false);
+            recyclerView.setLayoutManager(mManager);
+
+            holder.beforePrice = convertView.findViewById(R.id.child_item_beforePrice);
+            holder.afterPrice = convertView.findViewById(R.id.child_item_afterPrice);
 //            holder.title.setText(item.title);
 //            holder.hint.setText(item.hint);
 
@@ -243,7 +249,7 @@ public class MainActivity extends AppCompatActivity {
             } else {
                 holder = (GroupHolder) convertView.getTag();
             }
-            recyclerAdapter = new RecyclerAdapter(MainActivity.this,items.get(groupPosition).child.get(0).items);
+//            recyclerAdapter = new RecyclerAdapter(MainActivity.this,items.get(groupPosition).child.get(0).items);
 
             holder.title.setText(item.title);
 
