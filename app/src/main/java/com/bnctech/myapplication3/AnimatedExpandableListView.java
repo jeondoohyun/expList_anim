@@ -139,10 +139,10 @@ public class AnimatedExpandableListView extends ExpandableListView {
     @SuppressLint("NewApi")
     public boolean expandGroupWithAnimation(int groupPos) {
         boolean lastGroup = groupPos == adapter.getGroupCount() - 1;
-        Log.e("adapter.Count",adapter.getGroupCount()+"");
-        if (lastGroup && Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
-            return expandGroup(groupPos, true);
-        }
+
+//        if (lastGroup && Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
+//            return expandGroup(groupPos, true);   /*todo 이거 없애니까 마지막 리스트뷰 애니메이션 적용됨*/
+//        }
 
         int groupFlatPos = getFlatListPosition(getPackedPositionForGroup(groupPos));
         Log.e("groupFlatPos",groupFlatPos+"");  /*todo delete*/
@@ -170,7 +170,8 @@ public class AnimatedExpandableListView extends ExpandableListView {
         adapter.startExpandAnimation(groupPos, 0);
         // Finally call expandGroup (note that expandGroup will call
         // notifyDataSetChanged so we don't need to)
-        return expandGroup(groupPos);
+        return expandGroup(groupPos);   /*expandGroup() 메소드 삭제하니까 expand리스트가 안펼쳐짐*/
+
     }
 
     /**
@@ -568,6 +569,7 @@ public class AnimatedExpandableListView extends ExpandableListView {
         }
     }
 
+    // 애니메이션 기능을 담당하는 클래스
     private static class ExpandAnimation extends Animation {
         private int baseHeight;
         private int delta;
@@ -583,6 +585,8 @@ public class AnimatedExpandableListView extends ExpandableListView {
             view.getLayoutParams().height = startHeight;
             view.requestLayout();
         }
+
+        
 
         @Override
         protected void applyTransformation(float interpolatedTime, Transformation t) {

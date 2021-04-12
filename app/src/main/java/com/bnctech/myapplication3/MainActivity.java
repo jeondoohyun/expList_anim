@@ -86,6 +86,14 @@ public class MainActivity extends AppCompatActivity {
         item.child.get(0).items.add(new Item("17","18"));
         items.add(item);
 
+        item = new GroupItem();
+        item.title = "전체pass/구독형";
+        item.child.add(new child());
+        item.child.get(0).items.add(new Item("19","20"));
+        item.child.get(0).items.add(new Item("21","22"));
+        item.child.get(0).items.add(new Item("23","24"));
+        items.add(item);
+
         Log.e("items사이즈",items.size()+"");
 
 
