@@ -586,8 +586,10 @@ public class AnimatedExpandableListView extends ExpandableListView {
             view.requestLayout();
         }
 
-        
 
+
+        // requestLayout() : view의 사이즈가 바뀌어 뷰간의 경계에도 영향을 준다면 requestLayout()을 호출
+        // invalidate() : 단순한 변경사항을 보여주기 위하여 다시 그리는경우 invalidate()를 호출.
         @Override
         protected void applyTransformation(float interpolatedTime, Transformation t) {
             super.applyTransformation(interpolatedTime, t);
