@@ -140,9 +140,9 @@ public class AnimatedExpandableListView extends ExpandableListView {
     public boolean expandGroupWithAnimation(int groupPos) {
         boolean lastGroup = groupPos == adapter.getGroupCount() - 1;
 
-//        if (lastGroup && Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
-//            return expandGroup(groupPos, true);   /*todo 이거 없애니까 마지막 리스트뷰 애니메이션 적용됨*/
-//        }
+        if (lastGroup && Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
+            return expandGroup(groupPos, true);   /*todo 이거 없애니까 마지막 리스트뷰 애니메이션 적용됨*/
+        }
 
         int groupFlatPos = getFlatListPosition(getPackedPositionForGroup(groupPos));
         Log.e("groupFlatPos",groupFlatPos+"");  /*todo delete*/
